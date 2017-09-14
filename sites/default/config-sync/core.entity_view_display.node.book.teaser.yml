@@ -1,0 +1,28 @@
+uuid: 6a026ee3-e5cb-433c-9124-7ce575c772a2
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.book.body
+    - field.field.node.book.field_book_isbn
+    - node.type.book
+  module:
+    - user
+id: node.book.teaser
+targetEntityType: node
+bundle: book
+mode: teaser
+content:
+  field_book_isbn:
+    type: number_integer
+    weight: 0
+    region: content
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+hidden:
+  body: true
+  links: true
