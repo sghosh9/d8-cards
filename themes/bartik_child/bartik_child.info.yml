@@ -1,0 +1,4 @@
+name: Bartik Child
+type: theme
+core: 8.x
+base theme: bartik
