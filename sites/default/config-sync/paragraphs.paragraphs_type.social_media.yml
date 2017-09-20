@@ -1,0 +1,9 @@
+uuid: 3ba0a017-45c5-4340-8f0d-057b43f38968
+langcode: en
+status: true
+dependencies: {  }
+id: social_media
+label: 'Social Media'
+icon_uuid: null
+description: ''
+behavior_plugins: {  }
