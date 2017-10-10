@@ -1,0 +1,6 @@
+learn_forms.system_form:
+  path: '/admin/learn_forms/config'
+  defaults:
+    _form: '\Drupal\learn_forms\Form\ConfigurationForm'
+  requirements: 
+    _permission: 'access learn forms'
