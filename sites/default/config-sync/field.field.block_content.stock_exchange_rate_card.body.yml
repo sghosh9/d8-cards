@@ -1,0 +1,22 @@
+uuid: b84e849e-1ea4-4bff-897f-76a6b96a4e3c
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.stock_exchange_rate_card
+    - field.storage.block_content.body
+  module:
+    - text
+id: block_content.stock_exchange_rate_card.body
+field_name: body
+entity_type: block_content
+bundle: stock_exchange_rate_card
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+field_type: text_with_summary
