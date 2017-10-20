@@ -1,0 +1,5 @@
+name: Learn Blocks
+description: Learning different operations with blocks through code.
+type: module
+core: 8.x
+package: Custom

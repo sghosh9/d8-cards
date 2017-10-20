@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * Implements hook_cron().
+ */
+function learn_blocks_cron() {
+  _lb_update_block_data();
+}
+
+function _lb_update_block_data() {
+  // Get all blocks of type 'stock_exchange_rate_card'.
+  $query = \Drupal::entityQuery('block_content')
+  ->condition('type', 'stock_exchange_rate_card');
+  $ids = $query->execute();
+  
+  // Load all the block entities.
+  $blocks = entity_load_multiple('block_content', $ids);
+
+  // For each block update the last price and change values.
+  foreach ($blocks as $entity) {
+    $symbol = $entity->get('field_symbol')->value;
+    $response_data = _lb_get_exchange_data($symbol);
+    // If this block got data returned, then set the 2 fields and save the block entity.
+    if (!empty($response_data)) {
+      $entity->set("field_last_price", $response_data->LastPrice);
+      $entity->set("field_change", $response_data->Change);
+      $entity->save();
+    }
+  }
+}
+
+function _lb_get_exchange_data($symbol) {
+  $response_arr = [];
+
+  if ($symbol) {
+    // Set up the url for an http request.
+    $url = 'http://dev.markitondemand.com/MODApis/Api/v2/Quote/jsonp?symbol=' . $symbol . '&callback=myFunction';
+    $client = \Drupal::httpClient();
+
+    try {
+      $response = $client->get($url);
+      $data = (string)$response->getBody();
+      
+      // Remove the extra characters from the string and then json_decode it.
+      $data = rtrim($data,')');
+      $data = str_replace('myFunction(', '', $data);
+      $response_arr = json_decode($data);
+    }
+    catch (RequestException $e) {
+      watchdog_exception('learn_blocks', $e);
+    }
+  }
+
+  return $response_arr;
+}
